@@ -1,0 +1,21 @@
+sequelize model:create --name tarif --attributes daya:string,tarifperkwh:double
+sequelize model:create --name level --attributes nama_level:string
+sequelize model:create --name admin --attributes username:string,password:string,nama_admin:string,id_level:integer
+sequelize model:create --name pelanggan --attributes username:string,password:string,nomor_kwh:string,nama_pelanggan:string,alamat:string,id_tarif:integer
+sequelize model:create --name penggunaan --attributes id_pelanggan:integer,bulan:string,tahun:string,meter_awal:double,meter_akhir:double
+sequelize model:create --name tagihan --attributes id_penggunaan:integer,bulan:string,tahun:string,jumlah_meter:double,status:boolean
+sequelize model:create --name pembayaran --attributes id_tagihan:integer,tanggal_pembayaran:date,bulan_bayar:string,biaya_admin:integer,total_bayar:integer,status:boolean,bukti:string,id_admin:integer
+
+kardinalitas
+tarif - pelanggan -> one to one
+pelanggan - tarif -> one to one
+pelanggan - penggunaan -> one to many
+penggunaan - pelaanggan -> one to one
+penggunaan - tagihan -> one to one
+tagihan - penggunaan -> one to many
+level - admin -> one to one
+admin - level -> one to one
+tagihan - pembayaran -> one to one
+pembayaran - tagihan -> one to one
+admin - pembayaran -> one to many
+pembayaran - admin -> one to one  
